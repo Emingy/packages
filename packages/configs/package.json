@@ -7,7 +7,7 @@
         "dist"
     ],
     "scripts": {
-        "build": "tsc & cp ./src/soft-tsconfig.json ./dist/soft-tsconfig.json"
+        "build": "tsc && cp ./src/soft-tsconfig.json ./dist/soft-tsconfig.json"
     },
     "keywords": [
         "eslint",

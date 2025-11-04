@@ -3,7 +3,7 @@
     "private": true,
     "scripts": {
         "prepare": "husky",
-        "preinstall": "pnpm -r --if-present build",
+        "postinstall": "pnpm -r --if-present build",
         "build": "pnpm -r --if-present build",
         "build:storybook": "storybook build",
         "build:all": "pnpm build && build:storybook",
@@ -27,13 +27,13 @@
         ]
     },
     "dependencies": {
-        "@emingy/core": "workspace:^",
+        "@emingy/core": "workspace:*",
         "classnames": "2.5.1",
         "react": "19.2.0",
         "react-dom": "19.2.0"
     },
     "devDependencies": {
-        "@emingy/configs": "workspace:^",
+        "@emingy/configs": "workspace:*",
         "@rsbuild/plugin-react": "1.4.1",
         "@rsbuild/plugin-sass": "1.4.0",
         "@rslib/core": "0.17.0",
