@@ -1,0 +1,60 @@
+name: Manual Beta Publish
+
+on:
+    workflow_dispatch:
+        inputs:
+            target_branch:
+                description: 'Source branch to publish (e.g., feature/my-branch). Note: "master" is forbidden.'
+                required: true
+                type: string
+
+permissions:
+    contents: write
+    packages: write
+    id-token: write
+
+jobs:
+    publish-beta:
+        name: 🧪 Publish Beta to npm
+        runs-on: ubuntu-latest
+
+        if: github.event.inputs.target_branch != 'master'
+
+        steps:
+            - name: Checkout Source Branch
+              uses: actions/checkout@v4
+              with:
+                  ref: ${{ github.event.inputs.target_branch }}
+                  fetch-depth: 0
+
+            - name: Setup pnpm
+              uses: pnpm/action-setup@v4
+              with:
+                  version: 10
+
+            - name: Setup Node.js and npm auth
+              uses: actions/setup-node@v4
+              with:
+                  node-version: '22'
+                  cache: 'pnpm'
+                  registry-url: 'https://registry.npmjs.org'
+
+            - name: Install dependencies
+              run: pnpm install --frozen-lockfile
+
+            - name: Configure Git User (for versioning)
+              run: |
+                  git config user.name github-actions[bot]
+                  git config user.email github-actions[bot]@users.noreply.github.com
+
+            - name: Build packages
+              run: pnpm run build
+
+            # Version: X.Y.Z-beta.<run_id>.N (example: 1.0.0-beta.123456789.0)
+            - name: Bump to Pre-Release Version
+              run: pnpm -r version prerelease --preid beta.${{ github.run_id }} --no-git-tag-version
+
+            - name: Publish Beta to npm
+              run: pnpm -r publish --tag beta --access public --no-git-checks
+              env:
+                  NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
