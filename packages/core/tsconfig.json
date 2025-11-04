@@ -1,0 +1,19 @@
+{
+    "extends": "@emingy/configs/tsconfig",
+    "compilerOptions": {
+        "paths": {
+            "@emingy/core/*": ["src/*"]
+        },
+        "outDir": "./dist",
+        "baseUrl": "./"
+    },
+    "include": ["src/**/*", "types.d.ts"],
+    "exclude": [
+        "dist",
+        "node_modules",
+        "**/*.stories.*",
+        "**/__tests__",
+        "**/*.mdx",
+        "src/styles/**/story"
+    ]
+}

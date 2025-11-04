@@ -1,0 +1,76 @@
+@use '@emingy/core/styles/typography';
+
+.Typography {
+    margin: 0;
+    padding: 0;
+    color: var(--color-grey-1);
+    text-align: left;
+
+    &--type-heading-1 {
+        @include typography.heading-1;
+    }
+    &--type-heading-2 {
+        @include typography.heading-2;
+    }
+    &--type-heading-3 {
+        @include typography.heading-3;
+    }
+    &--type-title {
+        @include typography.title;
+    }
+    &--type-subtitle {
+        @include typography.subtitle;
+    }
+    &--type-large {
+        @include typography.large;
+    }
+    &--type-base {
+        @include typography.base;
+    }
+    &--type-small {
+        @include typography.small;
+    }
+    &--type-micro {
+        @include typography.micro;
+    }
+
+    &--weight-medium {
+        @include typography.weight-medium;
+    }
+    &--weight-semibold {
+        @include typography.weight-semibold;
+    }
+    &--weight-bold {
+        @include typography.weight-bold;
+    }
+
+    &--italic {
+        font-style: italic;
+    }
+
+    &--align-center {
+        text-align: center;
+    }
+    &--align-right {
+        text-align: right;
+    }
+    &--align-justify {
+        text-align: justify;
+    }
+
+    &--case-uppercase {
+        text-transform: uppercase;
+    }
+    &--case-lowercase {
+        text-transform: lowercase;
+    }
+    &--case-capitalize {
+        text-transform: capitalize;
+    }
+
+    &--truncated {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+}

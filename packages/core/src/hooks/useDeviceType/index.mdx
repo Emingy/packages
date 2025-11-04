@@ -1,0 +1,72 @@
+import { Meta, Markdown } from '@storybook/blocks';
+import * as Stories from './index.stories';
+
+<Meta of={Stories}/>
+
+# useDeviceType: Responsive Hook
+
+The `useDeviceType` hook provides the current device category (`mobile`, `tablet`, or `desktop`) based on the window's viewport width. It automatically updates its state whenever the window is resized, enabling components to render adaptive content dynamically.
+
+---
+
+## I. Hook API and Return Values
+
+The hook returns an object containing three boolean flags, allowing for conditional rendering logic directly within your React components.
+
+<Markdown>
+{`
+| Return Value | Type | Description |
+| :--- | :--- | :--- |
+| **\`isMobile\`** | \`boolean\` | \`true\` if the viewport width is in the mobile range. |
+| **\`isTablet\`** | \`boolean\` | \`true\` if the viewport width is in the tablet range. |
+| **\`isDesktop\`** | \`boolean\` | \`true\` if the viewport width is in the desktop range. |
+`}
+</Markdown>
+
+### Usage Example
+
+<Markdown>
+{`
+\`\`\`tsx
+import { useDeviceType } from '@emingy/core/hooks';
+import { MobileMenu, DesktopMenu } from './components';
+
+const Header = () => {
+  const { isMobile, isDesktop } = useDeviceType();
+
+  if (isMobile) {
+    return <MobileMenu />;
+  }
+  
+  if (isDesktop) {
+    return <DesktopMenu />;
+  }
+  
+  // Default/Tablet view logic
+  return <DesktopMenu isCompact={true} />;
+};
+\`\`\`
+`}
+</Markdown>
+
+---
+
+## II. Breakpoint Definitions
+
+The device types are determined using specific pixel ranges. **These definitions must correspond exactly to the CSS media query mixins** (e.g., `@mixin mobile`, `@mixin desktop`) to avoid visual inconsistencies between React and CSS rendering.
+
+<Markdown>
+{`
+| Device Type | Boolean Flag | Viewport Width Range | CSS Mapping |
+| :--- | :--- | :--- | :--- |
+| **\`Mobile\`** | \`isMobile\` | \`width < 600px\` | Corresponds to \`@media (max-width: 599px)\` |
+| **\`Tablet\`** | \`isTablet\` | \`600px <= width <= 1024px\` | Corresponds to \`@media (min-width: 600px) and (max-width: 1024px)\` |
+| **\`Desktop\`** | \`isDesktop\` | \`width > 1024px\` | Corresponds to \`@media (min-width: 1025px)\` |
+`}
+</Markdown>
+
+---
+
+## III. Technical Implementation
+
+The hook uses a standard `useEffect` lifecycle to subscribe to the global `resize` event, ensuring the application state accurately reflects the user's viewport changes (e.g., rotating a tablet or resizing a browser window).

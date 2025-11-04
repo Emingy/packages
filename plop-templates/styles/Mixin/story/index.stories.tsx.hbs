@@ -1,0 +1,28 @@
+import React from 'react';
+import { Meta } from 'storybook-react-rsbuild';
+import cls from 'classnames/bind';
+import styles from './index.module.scss';
+import { Typography, Flex } from '@emingy/core/ui';
+
+const BLOCK_NAME = '{{ pascalCase name }}';
+const cn = cls.bind(styles);
+
+const Content = () => {
+    return (
+        <Flex direction="column" gap="8x" className={cn(BLOCK_NAME)}>
+            <Typography.Heading1 isBold={true}>{{ pascalCase name }}</Typography.Heading1>
+            <Flex direction="column" gap="6x">
+                todo
+            </Flex>
+        </Flex>
+    );
+};
+
+const meta: Meta = {
+    title: 'Base/{{ pascalCase name }}',
+    component: Content,
+};
+
+export default meta;
+
+export const Default = {};

@@ -1,0 +1,58 @@
+import { Meta, Markdown } from '@storybook/blocks';
+import * as Stories from './index.stories';
+
+<Meta of={Stories}/>
+
+# Spacing System Documentation: CSS Variables
+
+This document formalizes the **Spacing System** within the project. All dimensions related to layout, including margins, padding, and gaps, are managed via a set of scalable **CSS Custom Properties** (CSS variables).
+
+---
+
+## I. Implementation Standard: Scalable Spacing Variables
+
+The spacing system is designed around a fixed base unit, ensuring consistent visual rhythm and facilitating responsive design across all components.
+
+### Base Unit and Scale
+
+The base unit for the system is **4 pixels (`4px`)**. All spacing variables are defined as a multiplier of this base unit.
+
+### Naming Convention
+
+All spacing variables adhere to the following naming convention, where the multiplier is clearly indicated:
+
+<Markdown>
+{`
+| Variable Name | Multiplier | Pixel Value | Description |
+| :--- | :--- | :--- | :--- |
+| **\`--spacing-1x\`** | \`1\` | \`4px\` | Base unit. |
+| **\`--spacing-2x\`** | \`2\` | \`8px\` | Small spacing. |
+| **\`--spacing-4x\`** | \`4\` | \`16px\` | Medium spacing (Standard component padding). |
+| **\`--spacing-6x\`** | \`6\` | \`24px\` | Large spacing. |
+| **\`--spacing-8x\`** | \`8\` | \`32px\` | Extra-large spacing. |
+| **\`--spacing-10x\`** | \`10\` | \`40px\` | Major section spacing. |
+| **\`--spacing-12x\`** | \`12\` | \`48px\` | Maximum defined spacing. |
+`}
+</Markdown>
+
+### Usage Protocol
+
+Developers **must** utilize these defined CSS variables for all dimensional values related to space. Direct use of static pixel values (`px`) for margins, padding, or gaps is prohibited in components.
+
+<Markdown> 
+{`
+\`\`\`css
+/* CORRECT: Referencing the defined Spacing Variable for margins and padding */
+.card-component {
+  margin-bottom: var(--spacing-8x); 
+  padding: var(--spacing-4x);
+}
+
+/* CORRECT (Flex/Grid Gap): */
+.layout-container {
+  display: flex;
+  gap: var(--spacing-6x);
+}
+\`\`\`
+`}
+</Markdown>

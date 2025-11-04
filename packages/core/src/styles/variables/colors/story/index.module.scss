@@ -1,0 +1,10 @@
+.Colors {
+    &__group__name {
+        text-transform: capitalize;
+    }
+
+    &__group__item__preview {
+        height: 100%;
+        width: 100%;
+    }
+}

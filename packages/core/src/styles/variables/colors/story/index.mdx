@@ -1,0 +1,48 @@
+import { Meta, Markdown } from '@storybook/blocks';
+import * as Stories from './index.stories';
+
+<Meta of={Stories}/>
+
+# Color System Documentation: CSS Variables
+
+This document provides a formal overview and documentation for the **Color System** utilized within the project, which is implemented exclusively through **CSS Custom Properties** (CSS variables).
+
+---
+
+## I. Implementation Standard: CSS Variables
+
+The entire project color palette is defined using a structured system of **CSS Custom Properties**. This approach ensures modularity, simplifies theme switching, and facilitates centralized maintenance of the design system's color assets.
+
+### Naming Convention
+
+All color variables adhere to a consistent naming convention:
+
+<Markdown>
+{`
+| Component | Description | Examples |
+| :--- | :--- | :--- |
+| **--color-** | Standard prefix for all color variables. | |
+| **[hue]** | The primary color identifier (e.g., green, grey, red). | --color-green-50 |
+| **[intensity]** | A numeric suffix indicating the value (lightness or darkness) of the shade. Typically ranges from **1** (lightest) to **100** (darkest/most saturated). | --color-grey-1 |
+`}
+</Markdown>
+
+### Usage Protocol
+
+To apply any color from the palette, developers **must** reference the corresponding CSS variable. Direct use of hexadecimal or RGB values is prohibited to maintain design integrity and system coherence.
+
+<Markdown> 
+{`
+\`\`\`css
+/* CORRECT: Referencing the defined CSS Variable */
+.component-background {
+    background-color: var(--color-purple-50);
+}
+
+/* INCORRECT: Direct value usage */
+.component-background-error {
+    background-color: #be1d1c; /* Avoid direct HEX values */
+}
+\`\`\`
+`}
+</Markdown>

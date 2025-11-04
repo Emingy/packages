@@ -1,0 +1,5 @@
+@use '@emingy/core/styles/fonts';
+
+* {
+    @include fonts.font-inter;
+}

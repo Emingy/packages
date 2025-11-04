@@ -1,0 +1,53 @@
+import { Meta, Markdown } from '@storybook/blocks';
+
+<Meta title="Base/Shadows"/>
+
+# Shadow Mixins: Elevation System
+
+This document specifies the SCSS mixins used to apply standardized **box shadows** (elevation) across components. These mixins define a hierarchical system of visual depth, ensuring consistent shadow application throughout the UI.
+
+
+
+## I. Shadow Scale Definitions
+
+The shadow system includes four distinct levels, progressing from subtle hints of depth to pronounced separation of elements. The shadows use consistent color and opacity, varying only in blur radius and offset to define elevation.
+
+<Markdown>
+{`
+| Mixin Name | CSS Value (\`box-shadow\`) | Elevation Level | Use Case / Context |
+| :--- | :--- | :--- | :--- |
+| **\`@mixin shadow-micro\`** | \`0 1px 2px rgba(0, 0, 0, 0.05)\` | **Level 1 (Micro)** | Subtle separation, hover states, input field focus. |
+| **\`@mixin shadow-sm\`** | \`0 2px 4px rgba(0, 0, 0, 0.07)\` | **Level 2 (Small)** | Standard card elevation, dropdown menu items. |
+| **\`@mixin shadow-md\`** | \`0 4px 8px rgba(0, 0, 0, 0.1)\` | **Level 3 (Medium)** | Primary interaction elements, persistent side panels, medium-sized modals. |
+| **\`@mixin shadow-lg\`** | \`0 8px 20px rgba(0, 0, 0, 0.15)\` | **Level 4 (Large)** | High-priority modals, distinct floating action buttons, elements requiring maximum visual separation. |
+`}
+</Markdown>
+
+
+
+## II. Usage Protocol
+
+Shadows **must** be applied using these mixins. Direct use of the `box-shadow` property with custom values is prohibited to maintain visual consistency.
+
+### Usage Example
+
+To apply a standard medium shadow to a card component:
+
+<Markdown>
+{`
+\`\`\`css
+@use "@emingy/core/styles/shadows";
+
+.card {
+    background-color: white;
+    border-radius: 8px;
+    
+    @include shadows.shadow-md;
+}
+
+.modal-header {
+    @include shadows.shadow-sm;
+}
+\`\`\`
+`}
+</Markdown>

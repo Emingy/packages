@@ -1,0 +1,53 @@
+import { Meta, Markdown } from '@storybook/blocks';
+import * as Stories from './index.stories';
+
+<Meta of={Stories}/>
+
+# Flex: Layout Container
+
+The `Flex` component is a dedicated wrapper for leveraging **CSS Flexbox** within the application. It simplifies layout management by providing convenient props to control direction, alignment, justification, and uses the defined **Spacing System** for managing internal gaps.
+
+---
+
+## I. Component Usage
+
+The component renders a `<div>` element by default with `display: flex` applied. It should be used to arrange groups of elements in one dimension (row or column).
+
+### Basic Example
+
+<Markdown>
+{`
+\`\`\`tsx
+import { Flex, Typography } from '@emingy/core/ui';
+
+<Flex direction="column" justify="center" align="center" gap="4x" className="my-header">
+  <Typography.Heading2>Title</Typography.Heading2>
+  <Typography.Base>Subtitle and controls</Typography.Base>
+  <button>Action</button>
+</Flex>
+\`\`\`
+`}
+</Markdown>
+
+---
+
+## II. Component Props
+
+The `Flex` component accepts standard HTML attributes for a `div` element, plus specific props to control Flexbox behavior.
+
+<Markdown>
+{`
+| Prop Name | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| **\`direction\`** |\`'row'\` \\| \`'column'\` \\| \`'row-reverse'\` \\| \`'column-reverse'\` | \`'row'\` | Sets the \`flex-direction\` property. |
+| **\`justify\`** | \`'flex-start'\` \\| \`'flex-end'\` \\| \`'center'\` \\| \`'space-between'\` \\| \`'space-around'\` | \`'flex-start'\` | Sets the \`justify-content\` property. |
+| **\`align\`** | \`'flex-start'\` \\| \`'flex-end'\` \\| \`'center'\` \\| \`'stretch'\` \\| \`'baseline'\` | \`'stretch'\` | Sets the \`align-items\` property. |
+| **\`gap\`** | \`'1x'\` \\| \`'2x'\` \\| \`'4x'\` \\| \`'6x'\` \\| \`'8x'\` \\| \`'10x'\` \\| \`'12x'\` | (None) | Applies spacing between children using the design system's **Spacing Variables**. |
+| **\`inline\`** | \`boolean\` | \`false\` | Sets \`display: inline-flex\` instead of \`display: flex\`. |
+| **\`wrap\`** | \`boolean\` | \`false\` | Sets \`flex-wrap: wrap\`, allowing items to wrap to a new line. |
+| **\`className\`** | \`string\` | | Additional CSS classes for styling. |
+| **\`children\`** | \`ReactNode\` | | Content to be laid out by the Flex container. |
+`}
+</Markdown>
+
+---

@@ -1,0 +1,37 @@
+{
+    "name": "@emingy/core",
+    "version": "0.0.1",
+    "description": "UI-KIT",
+    "files": [
+        "dist"
+    ],
+    "scripts": {
+        "build": "rslib build && rsync -av --exclude '*/story/' src/styles/ dist/styles",
+        "check-circular-dependency": "dpdm --no-warning --no-tree --transform --exit-code circular:1 src/**/*.ts"
+    },
+    "author": "Emingy",
+    "license": "ISC",
+    "exports": {
+        "./ui": {
+            "types": "./dist/ui/index.d.ts",
+            "import": "./dist/ui/index.js",
+            "require": "./dist/ui/index.js"
+        },
+        "./hooks": {
+            "types": "./dist/hooks/index.d.ts",
+            "import": "./dist/hooks/index.js",
+            "require": "./dist/hooks/index.js"
+        },
+        "./styles/*": "./dist/styles/*"
+    },
+    "dependencies": {
+        "classnames": "2.5.1"
+    },
+    "devDependencies": {
+        "@emingy/configs": "workspace:^"
+    },
+    "peerDependencies": {
+        "react": "19.2.0",
+        "react-dom": "19.2.0"
+    }
+}

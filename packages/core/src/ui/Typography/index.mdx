@@ -1,0 +1,84 @@
+import { Meta, Markdown } from '@storybook/blocks';
+import * as Stories from './index.stories';
+
+<Meta of={Stories}/>
+
+# Typography: The Text Component
+
+The `Typography` component is the **sole entry point** for rendering text elements in the application. It enforces the design system's typographic scale, weight, and alignment rules, ensuring visual consistency and semantic correctness.
+
+---
+
+## I. Component Structure and Types
+
+The `Typography` component is an object containing nine named subcomponents, each corresponding to a size defined in the SCSS mixin system (e.g., `Heading1` maps to `@mixin heading-1`).
+
+### Available Subcomponents
+
+<Markdown>
+{`
+| Subcomponent | Base SCSS Mixin | Default HTML Tag | Semantic Use |
+| :--- | :--- | :--- | :--- |
+| **Typography.Heading1** | @mixin heading-1 | h1 | Primary page title. |
+| **Typography.Heading2** | @mixin heading-2 | h2 | Major section title. |
+| **Typography.Heading3** | @mixin heading-3 | h3 | Subsection title. |
+| **Typography.Title** | @mixin title | p | Large labels, module titles. |
+| **Typography.Subtitle** | @mixin subtitle | p | Secondary labels, emphasized text. |
+| **Typography.Large** | @mixin large | p | Standard buttons and form input text. |
+| **Typography.Base** | @mixin base | p | **Default body text and paragraphs.** |
+| **Typography.Small** | @mixin small | p | Helper text, captions, footnotes. |
+| **Typography.Micro** | @mixin micro | p | Least prominent text, metadata. |
+`}
+</Markdown>
+
+### Basic Usage
+
+Use the desired subcomponent to set the size, then apply modifiers via props.
+
+<Markdown>
+{`
+\`\`\`tsx
+import { Typography } from '@emingy/core/ui';
+
+// Renders an <h1> tag with the 'heading-1' style
+<Typography.Heading1 weight="bold">
+  Main Dashboard Title
+</Typography.Heading1>
+
+// Renders a <p> tag with the 'base' style
+<Typography.Base align="center">
+  Standard paragraph text centered.
+</Typography.Base>
+\`\`\`
+`}
+</Markdown>
+
+## II. Component Props (Modifiers)
+All subcomponents accept the following props to modify the text's appearance and behavior.
+
+<Markdown> 
+{`
+| Prop Name | Type | Default | Description | 
+| :--- | :--- | :--- | :--- |
+| weight | 'medium' \\| 'semibold' \\| 'bold' | 400 (via mixin) | Applies a specific font weight. | 
+| elementType | ElementType | (Varies) | Overrides the default HTML tag for semantic or structural reasons. | 
+| align | 'center' \\| 'right' \\| 'justify' | 'left' (via CSS) | Sets the horizontal text alignment. | 
+| isItalic | boolean | false | Renders text with font-style: italic. |
+| textCase | 'uppercase' \\| 'lowercase' \\| 'capitalize' | undefined | Applies text-transform. | 
+| isTruncated | boolean | false | Truncates single-line text with ellipsis (...). | 
+| maxLines | number | undefined | Limits multi-line text to a specified number of lines with ellipsis. | 
+| className | string | undefined | Additional CSS classes. | 
+`}
+</Markdown>
+
+## III. Truncation Control
+The component offers two distinct methods for handling text overflow. Only one method should be used at a time.
+
+<Markdown> 
+{`
+| Property | Behavior | Mechanism | 
+| :--- | :--- | :--- | 
+| isTruncated | Single-line overflow | Applies white-space: nowrap and overflow: hidden (standard CSS). |
+| maxLines | Multi-line overflow | Uses proprietary -webkit-line-clamp styles (for cross-browser multi-line truncation). |
+`}
+</Markdown>

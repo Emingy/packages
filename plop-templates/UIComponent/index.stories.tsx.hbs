@@ -1,0 +1,11 @@
+import { Meta } from 'storybook-react-rsbuild';
+import { {{ pascalCase name}}, T{{ pascalCase name }}Props } from './src';
+
+const meta: Meta = {
+    title: 'UI/{{ pascalCase name }}',
+    component: {{ pascalCase name }},
+};
+
+export default meta;
+
+export const Demo = (props: T{{ pascalCase name }}Props) => <{{ pascalCase name }} {...props}/>;

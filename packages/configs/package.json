@@ -1,0 +1,42 @@
+{
+    "name": "@emingy/configs",
+    "version": "0.0.1",
+    "description": "Common configs (ESLint, Prettier, Stylelint, TypeScript).",
+    "type": "module",
+    "files": [
+        "dist"
+    ],
+    "scripts": {
+        "build": "tsc & cp ./src/soft-tsconfig.json ./dist/soft-tsconfig.json"
+    },
+    "keywords": [
+        "eslint",
+        "prettier",
+        "stylelint",
+        "config",
+        "tsconfig"
+    ],
+    "exports": {
+        ".": {
+            "import": "./dist/index.js",
+            "require": "./dist/index.js",
+            "types": "./dist/index.d.ts"
+        },
+        "./tsconfig": "./dist/soft-tsconfig.json"
+    },
+    "author": "Emingy",
+    "license": "ISC",
+    "peerDependencies": {
+        "@eslint/js": "9.39.1",
+        "@typescript-eslint/parser": "8.46.3",
+        "eslint": "9.37.0",
+        "eslint-plugin-simple-import-sort": "12.1.1",
+        "prettier": "3.6.2",
+        "stylelint-config-css-modules": "4.5.1",
+        "stylelint-config-standard": "39.0.1",
+        "stylelint-order": "7.0.0",
+        "stylelint-scss": "6.12.1",
+        "typescript-eslint": "8.46.3",
+        "globals": "16.5.0"
+    }
+}

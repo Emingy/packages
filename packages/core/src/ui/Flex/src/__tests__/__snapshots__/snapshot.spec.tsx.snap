@@ -1,0 +1,21 @@
+// Rstest Snapshot v1
+
+exports[`[SNAPSHOT] Flex > Default render 1`] = `
+<div
+  class="packages-core-src-ui-Flex-src-index-module__Flex-z0MOP6"
+  data-testid="flex"
+>
+  <div />
+  <div />
+</div>
+`;
+
+exports[`[SNAPSHOT] Flex > With all props render 1`] = `
+<div
+  class="packages-core-src-ui-Flex-src-index-module__Flex-z0MOP6 test-custom-class packages-core-src-ui-Flex-src-index-module__Flex--direction-column-reverse-JT5NLb packages-core-src-ui-Flex-src-index-module__Flex--justify-space-between-vjZwcI packages-core-src-ui-Flex-src-index-module__Flex--align-baseline-fy0mjI packages-core-src-ui-Flex-src-index-module__Flex--gap-12x-QVmp1T packages-core-src-ui-Flex-src-index-module__Flex--inline-cWpzHi packages-core-src-ui-Flex-src-index-module__Flex--wrap-QAwp9M"
+  data-testid="flex"
+>
+  <div />
+  <div />
+</div>
+`;

@@ -1,0 +1,60 @@
+import { Meta, Markdown } from '@storybook/blocks';
+import * as Stories from './index.stories';
+
+<Meta of={Stories}/>
+
+# Animation Variables: Duration and Easing
+
+This document formalizes the **CSS Custom Properties** used to control the duration and timing functions (easing) of all UI animations within the project. Adherence to these variables ensures a cohesive and predictable motion language across the application.
+
+---
+## I. Animation Duration Variables
+
+Animation duration variables define the **time** an animation takes to complete, measured in milliseconds (`ms`). These variables should be used exclusively in CSS properties like `transition-duration` or `animation-duration`.
+
+### Variable Naming and Values
+
+<Markdown>
+{`
+| Variable Name | Value | Description | Use Case |
+| :--- | :--- | :--- | :--- |
+| **\`--animation-duration-fast\`** | \`150ms\` | Extremely quick transitions. | Micro-interactions, hover effects. |
+| **\`--animation-duration-base\`** | \`250ms\` | The **standard** duration for most common transitions. | Component state changes, short modals. |
+| **\`--animation-duration-medium\`** | \`350ms\` | Noticeable, but still fluid transitions. | Complex element moves, sidebar toggles. |
+| **\`--animation-duration-slow\`** | \`500ms\` | Deliberate, extended animations. | Page transitions, large content reveals. |
+| **\`--animation-duration-very-slow\`** | \`700ms\` | Long, highly visible transitions. | Specific page loaders, focused user attention. |
+`}
+</Markdown>
+
+## II. Animation Easing Variables
+Easing variables define the rate of change over the animation's duration, controlling its acceleration and deceleration. These values are used in CSS properties like transition-timing-function or animation-timing-function.
+
+Variable Naming and Values
+
+<Markdown> 
+{`
+| Variable Name | Value (Cubic Bezier) | Description | Visual Effect |
+| :--- | :--- | :--- | :--- | 
+| --animation-easing-ease-in-out | cubic-bezier(0.4, 0, 0.2, 1) | Standard acceleration and deceleration. Recommended Default. | Starts slow, speeds up in the middle, ends slow. |
+| --animation-easing-ease-out | cubic-bezier(0, 0, 0.2, 1) | Standard deceleration. | Starts fast, ends slow. Good for elements entering the view. |
+| --animation-easing-ease-in | cubic-bezier(0.4, 0, 1, 1) | Standard acceleration. | Starts slow, ends fast. Good for elements leaving the view. |
+| --animation-easing-ease-linear | linear | Constant speed throughout. | No acceleration/deceleration. Used for continuous loops (e.g., loaders). |
+| --animation-easing-ease-bounce | cubic-bezier(0.175, 0.885, 0.32, 1.275) | A slight overshoot effect. | Creates a springy, bouncy effect. Use sparingly for playful interactions. | 
+`}
+</Markdown>
+
+
+## III. Usage Protocol
+
+<Markdown> 
+{`
+\`\`\`css
+/* CORRECT: Applying a standard animation duration */
+.sidebar-menu {
+  transition-property: transform;
+  transition-duration: var(--animation-duration-base);
+  transition-timing-function: var(--animation-easing-ease-in-out);
+}
+\`\`\`
+`}
+</Markdown>

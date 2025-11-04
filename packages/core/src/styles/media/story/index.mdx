@@ -1,0 +1,108 @@
+import { Meta, Markdown } from '@storybook/blocks';
+
+<Meta title='Base/Media'/>
+
+# Layout Mixins: Responsive Breakpoints
+
+This document details the SCSS mixins provided for managing responsive design across different device categories. These mixins should be the **sole method** for applying media queries within components, ensuring consistency with the project's defined breakpoints.
+
+---
+
+## I. Breakpoint Definitions
+
+The project utilizes three primary device categories, defined by the following screen widths. The mixins simplify the application of these rules.
+
+<Markdown>
+{`
+| Device Category | SCSS Mixin | CSS Rule (Breakpoint) | Scope (Max/Min Width) |
+| :--- | :--- | :--- | :--- |
+| **Mobile** | @mixin mobile | @media (max-width: 600px) | Up to and including 600px. |
+| **Tablet** | @mixin tablet | @media (max-width: 1024px) | Up to and including 1024px. |
+| **Desktop** | @mixin desktop | @media (min-width: 1025px) | Starting from 1025px and wider. |
+`}
+</Markdown>
+
+---
+
+## II. Usage Protocol
+
+To ensure maintainability, all media query blocks **must* be implemented using these mixins. The content to be applied inside the media query should be passed using the `@content` directive.
+
+### mixin mobile (Max Width: 600px)
+
+Applies styles for screens 600px wide or smaller.
+
+<Markdown>
+{`
+\`\`\`css
+@use "@emingy/core/styles/media"
+.component {
+    /* Base style (usually desktop-first or mobile default) */
+    font-size: 16px;
+
+    @include media.mobile {
+        /* Styles applied ONLY on Mobile screens */
+        padding: var(--spacing-2x);
+        font-size: 14px;
+    }
+}
+\`\`\`
+`}
+</Markdown>
+
+### mixin tablet (Max Width: 1024px)
+Applies styles for screens 1024px wide or smaller. Note that this range includes mobile unless nested within a more specific block.
+
+<Markdown>
+{`
+\`\`\`css
+.component-card {
+    /* Default desktop layout */
+    grid-template-columns: repeat(4, 1fr);
+
+    @include tablet {
+        /* Styles applied on Tablet and Mobile screens */
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+\`\`\`
+`}
+</Markdown>
+
+### mixin desktop (Min Width: 1025px)
+Applies styles for screens 1025px wide or larger. This is often used for a Mobile-First approach where the desktop styles override smaller defaults.
+
+<Markdown>
+{`
+\`\`\`css
+.header {
+    /* Default mobile style */
+    display: flex;
+    flex-direction: column;
+
+    @include desktop {
+        /* Styles applied ONLY on Desktop screens (1025px+) */
+        flex-direction: row;
+        justify-content: space-between;
+    }
+}
+\`\`\`
+`}
+</Markdown>
+
+---
+
+## III. SCSS Source
+For reference, the mixin definitions:
+
+<Markdown>
+{`
+\`\`\`css
+@mixin mobile { @media (max-width: 600px) { @content; } }
+
+@mixin tablet { @media (max-width: 1024px) { @content; } }
+
+@mixin desktop { @media (min-width: 1025px) { @content; } } 
+\`\`\`
+`}
+</Markdown>

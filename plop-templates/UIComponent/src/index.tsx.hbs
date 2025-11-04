@@ -1,0 +1,17 @@
+import React from 'react';
+import styles from './index.module.scss';
+import cls from 'classnames/bind';
+import { TProps } from './types.ts';
+
+const BLOCK_NAME = '{{ pascalCase name }}';
+const cn = cls.bind(styles);
+
+export const {{ pascalCase name }} = ({ className }: TProps) => {
+    return (
+        <div className={cn(`${BLOCK_NAME}`, className)}>
+            {{ pascalCase name }}
+        </div>
+    );
+};
+
+export type T{{ pascalCase name}}Props = TProps;

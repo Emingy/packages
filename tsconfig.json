@@ -1,0 +1,13 @@
+{
+    "extends": "@emingy/configs/tsconfig",
+    "compilerOptions": {
+        "module": "ESNext",
+        "moduleResolution": "bundler",
+        "baseUrl": "./",
+        "paths": {
+            "@storybook-components/*": ["storybook/components/*"],
+            "@storybook-utils/*": ["storybook/utils/*"]
+        }
+    },
+    "include": ["packages"]
+}

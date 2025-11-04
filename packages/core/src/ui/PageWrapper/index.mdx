@@ -1,0 +1,70 @@
+import { Meta, Markdown, ArgTypes } from '@storybook/blocks';
+
+<Meta title='UI/PageWrapper'/>
+
+# PageWrapper: Responsive Layout Container
+
+The `PageWrapper` component is designed to provide a consistent, responsive container for all page content. Its primary function is to manage horizontal padding and centralize the content based on the detected device type, ensuring adherence to the defined spacing system.
+
+---
+
+## I. Component Functionality
+
+The `PageWrapper` automatically applies specific structural and spacing rules based on the viewport size, leveraging the internal `useDeviceType` hook.
+
+### Core Responsibilities
+
+* **Content Centering:** On desktop, it applies automatic horizontal margins (`margin-left: auto; margin-right: auto;`) and limits the maximum content width (`max-width: 1280px`).
+* **Responsive Padding:** It dynamically adjusts the horizontal padding (`padding-left`, `padding-right` and `padding-bottom`) applied to the content area based on the device type.
+
+### Device-Specific Styling
+
+The component applies distinct CSS classes to enforce the project's spacing system across different breakpoints, utilizing defined CSS variables (e.g., `--spacing-4x`, `--spacing-8x`, `--spacing-12x`).
+
+<Markdown>
+{`
+| Device Type | Applied CSS Class | Left/Right Padding | Max Width |
+| :--- | :--- | :--- | :--- |
+| **Mobile** | \`PageWrapper__content--mobile\` | \`--spacing-4x\` (e.g., \`16px\`) | Full width (\`100%\`) |
+| **Tablet** | \`PageWrapper__content--tablet\` | \`--spacing-8x\` (e.g., \`32px\`) | Full width (\`100%\`) |
+| **Desktop** | \`PageWrapper__content--desktop\` | \`--spacing-12x\` (e.g., \`48px\`) | \`1280px\` (Centered) |
+`}
+</Markdown>
+
+---
+
+## II. Usage
+
+The `PageWrapper` should be used directly inside the application router or page component to wrap the main content block.
+
+### Integration Example
+
+```tsx
+import { PageWrapper } from '@emingy/core/ui';
+import { ContentComponent } from './ContentComponent';
+
+const MyPage = () => {
+  return (
+        <PageWrapper>
+      {/* All content within the PageWrapper is subject to responsive padding and max-width */}
+      <ContentComponent />
+      <p>This paragraph is correctly centered and padded.</p>
+    </PageWrapper>
+  );
+};
+
+export default MyPage;
+```
+
+### Props
+
+Since PageWrapper uses PropsWithChildren, it accepts one main prop:
+
+<Markdown>
+{` 
+  | Prop Name | Type | Description |
+  | :--- | :--- | :--- | 
+  | **children** | ReactNode | The elements (content of the page) to be rendered within the responsive container. | 
+  | **...restProps** | HTMLAttributes&lt;HTMLDivElement&gt; | All standard HTML attributes for the root element. | 
+`}
+</Markdown>

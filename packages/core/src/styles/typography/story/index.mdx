@@ -1,0 +1,62 @@
+import { Meta, Markdown } from '@storybook/blocks';
+
+<Meta title="Base/Typography"/>
+
+# Typography Mixins: The Text Scale
+
+This document specifies the SCSS mixins used to enforce a consistent typographic scale across the entire user interface. These mixins **must be used** instead of manually setting `font-size`, `line-height`, and `letter-spacing`.
+
+---
+
+## I. Typographic Scale Mixins
+
+These mixins define the nine standard text sizes available in the system. Each mixin establishes the `font-size`, `line-height`, and applies a consistent default `font-weight` (**400**) and `letter-spacing` (**-2%**).
+
+<Markdown>
+{`
+| Mixin Name | Font Size | Line Height | Weight (Default) | Use Case / Context |
+| :--- | :--- | :--- | :--- | :--- |
+| **\`@mixin heading-1\`** | \`32px\` | \`38px\` | \`400\` | Main page titles, primary headers (H1 equivalent). |
+| **\`@mixin heading-2\`** | \`28px\` | \`32px\` | \`400\` | Section titles, secondary headers (H2 equivalent). |
+| **\`@mixin heading-3\`** | \`24px\` | \`28px\` | \`400\` | Card titles, tertiary headers (H3 equivalent). |
+| **\`@mixin title\`** | \`22px\` | \`26px\` | \`400\` | Large component labels, module titles. |
+| **\`@mixin subtitle\`** | \`18px\` | \`22px\` | \`400\` | Supporting headers, emphasized body text. |
+| **\`@mixin large\`**** | \`16px\` | \`20px\` | \`400\` | Primary text for buttons, user input fields, and standard list items. |
+| **\`@mixin base\`** | \`14px\` | \`18px\` | \`400\` | **Default body text**, paragraphs, standard form labels. |
+| **\`@mixin small\`** | \`12px\` | \`16px\` | \`400\` | Helper text, captions, date stamps, and footnotes. |
+| **\`@mixin micro\`** | \`10px\` | \`14px\` | \`400\` | Least prominent text, metadata, tiny labels. |
+`}
+</Markdown>
+
+---
+
+## II. Auxiliary Mixins: Font Weights
+
+These mixins must be used to set specific font weights, overriding the default `400` weight established by the typographic scale mixins.
+
+<Markdown>
+{`
+| Mixin Name | Property Applied | Value |
+| :--- | :--- | :--- |
+| **\`@mixin weight-bold\`** | \`font-weight\` | \`700\` |
+| **\`@mixin weight-semibold\`** | \`font-weight\` | \`600\` |
+| **\`@mixin weight-medium\`** | \`font-weight\` | \`500\` |
+`}
+</Markdown>
+
+### Usage Example: Applying Size and Weight
+
+To apply a semi-bold, medium-sized text:
+
+<Markdown>
+{`
+\`\`\`css
+@use "@emingy/core/styles/typography";
+
+.nav-link {
+    @include typography.large; 
+    @include typography.weight-semibold; /* Sets font-weight to 600 */
+}
+\`\`\`
+`}
+</Markdown>
