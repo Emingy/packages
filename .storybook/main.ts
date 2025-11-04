@@ -11,7 +11,17 @@ const config: StorybookConfig = {
         reactDocgen: 'react-docgen-typescript',
         check: true,
     },
-    staticDirs: ['../public'],
+    staticDirs: [
+        {
+            from: '../public',
+            to: '/static',
+        },
+    ],
+    rsbuildFinal: (config) => {
+        config.output ??= {};
+        config.output.assetPrefix = process.env.PUBLIC_PATH ?? '/';
+        return config;
+    },
 };
 
 export default config;

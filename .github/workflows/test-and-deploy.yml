@@ -8,8 +8,14 @@ on:
         branches:
             - main
 
+permissions:
+    contents: read
+    pages: write
+    id-token: write
+
 jobs:
     tests:
+        name: 🧪 Testing
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v4
@@ -34,6 +40,7 @@ jobs:
               run: pnpm test
 
     checks:
+        name: 🔍 Static Analysis & Code Quality
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v4
@@ -62,3 +69,48 @@ jobs:
 
             - name: Check format
               run: pnpm format
+
+    deploy-storybook:
+        name: 🚀 Deploy Storybook to GitHub Pages
+        if: success() && github.event_name == 'push' && github.ref == 'refs/heads/master'
+        needs: [tests, checks]
+        runs-on: ubuntu-latest
+        environment:
+            name: github-pages
+            url: ${{ steps.deployment.outputs.page_url }}
+        concurrency:
+            group: deploy-storybook
+            cancel-in-progress: false
+
+        steps:
+            - uses: actions/checkout@v4
+              with:
+                  fetch-depth: 0
+
+            - name: Setup pnpm
+              uses: pnpm/action-setup@v4
+              with:
+                  version: 10
+
+            - name: Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: '22'
+                  cache: 'pnpm'
+
+            - name: Install dependencies
+              run: pnpm install --frozen-lockfile
+
+            - name: Build Storybook
+              run: PUBLIC_PATH='/packages' pnpm build:storybook
+
+            - name: Setup Pages
+              uses: actions/configure-pages@v5
+
+            - name: Upload artifact
+              uses: actions/upload-pages-artifact@v3
+              with:
+                  path: './storybook-static'
+            - name: Deploy to GitHub Pages
+              id: deployment
+              uses: actions/deploy-pages@v4
