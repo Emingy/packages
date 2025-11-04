@@ -1,0 +1,78 @@
+name: Manual Beta Publish
+
+on:
+    workflow_dispatch:
+        inputs:
+            package_name:
+                description: 'Name of the package to publish (e.g., @scope/button). Leave empty to publish ALL packages.'
+                required: false
+                default: '@emingy/configs'
+                type: choice
+                options:
+                    - '@emingy/configs'
+                    - '@emingy/core'
+permissions:
+    contents: write
+    packages: write
+    id-token: write
+
+jobs:
+    publish-beta:
+        name: 🧪 Publish Beta to npm ${{ github.event.inputs.package_name }}
+        runs-on: ubuntu-latest
+
+        if: github.ref_name != 'master'
+
+        steps:
+            - name: Checkout Source Branch
+              uses: actions/checkout@v4
+              with:
+                  ref: ${{ github.ref }}
+                  fetch-depth: 0
+
+            - name: Setup pnpm
+              uses: pnpm/action-setup@v4
+              with:
+                  version: 10
+
+            - name: Setup Node.js and npm auth
+              uses: actions/setup-node@v4
+              with:
+                  node-version: '22'
+                  cache: 'pnpm'
+                  registry-url: 'https://registry.npmjs.org'
+
+            - name: Install dependencies
+              run: pnpm install --frozen-lockfile
+
+            - name: Configure Git User (for versioning)
+              run: |
+                  git config user.name github-actions[bot]
+                  git config user.email github-actions[bot]@users.noreply.github.com
+
+            - name: Determine Package Filter Argument
+              id: filter_arg
+              run: |
+                  FILTER=""
+                  PACKAGE_NAME="${{ github.event.inputs.package_name }}"
+
+                  if [ -n "$PACKAGE_NAME" ]; then
+                      FILTER="--filter $PACKAGE_NAME"
+                  fi
+
+                  echo "filter_arg=$FILTER" >> $GITHUB_OUTPUT
+
+            - name: Build packages
+              run: pnpm ${{ steps.filter_arg.outputs.filter_arg }} run build
+
+            # Version: X.Y.Z-beta.<run_id>.N (example: 1.0.0-beta.123456789.0)
+            - name: Bump to beta version
+              run: |
+                  CURRENT_VERSION=$(pnpm --filter @emingy/configs exec -- node -p "require('./package.json').version")
+
+                  pnpm ${{ steps.filter_arg.outputs.filter_arg }} exec -- npm version "${CURRENT_VERSION}-beta-${{ github.run_id }}" --no-git-tag-version
+
+            - name: Publish Beta to npm
+              run: pnpm ${{ steps.filter_arg.outputs.filter_arg }} publish --tag beta --access public --no-git-checks
+              env:
+                  NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
