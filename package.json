@@ -17,7 +17,8 @@
         "test": "rstest",
         "check-circular-dependency": "pnpm -r --if-present check-circular-dependency",
         "precommit": "pnpm test && pnpm check-circular-dependency && pnpm build && pnpx lint-staged",
-        "cm": "cz"
+        "cm": "cz",
+        "knip": "knip"
     },
     "lint-staged": {
         "*.{ts,tsx,js,jsx}": [
@@ -53,18 +54,19 @@
         "@testing-library/react": "16.3.0",
         "@types/react": "19.2.2",
         "@types/react-dom": "19.2.2",
-        "cz-conventional-changelog": "^3.3.0",
+        "cz-conventional-changelog": "3.3.0",
         "dpdm": "3.14.0",
         "eslint": "9.37.0",
-        "stylelint": "16.25.0",
         "husky": "9.1.7",
         "jsdom": "26.1.0",
+        "knip": "5.67.1",
         "lint-staged": "16.2.4",
         "plop": "4.0.4",
         "prettier": "3.6.2",
         "storybook": "9.1.15",
         "storybook-addon-rslib": "2.1.2",
         "storybook-react-rsbuild": "2.1.4",
+        "stylelint": "16.25.0",
         "typescript": "5.9.3"
     },
     "engines": {

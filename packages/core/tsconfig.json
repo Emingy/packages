@@ -2,7 +2,9 @@
     "extends": "@emingy/configs/tsconfig",
     "compilerOptions": {
         "paths": {
-            "@emingy/core/*": ["src/*"]
+            "@emingy/core/*": ["src/*"],
+            "@storybook-components/*": ["../../storybook/components/*"],
+            "@storybook-utils/*": ["../../storybook/utils/*"]
         },
         "outDir": "./dist",
         "baseUrl": "./"
