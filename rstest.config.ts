@@ -14,4 +14,13 @@ export default defineConfig({
     testEnvironment: 'jsdom',
     globals: true,
     setupFiles: ['./rstest.setup.ts'],
+
+    coverage: {
+        enabled: true,
+        provider: 'istanbul',
+        thresholds: {
+            lines: 90,
+            functions: 90,
+        },
+    },
 });
