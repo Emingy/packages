@@ -7,7 +7,8 @@
         "dist"
     ],
     "scripts": {
-        "build": "tsc && cp ./src/soft-tsconfig.json ./dist/soft-tsconfig.json"
+        "build": "tsc && cp ./src/soft-tsconfig.json ./dist/soft-tsconfig.json",
+        "coverage:ts": "type-coverage"
     },
     "keywords": [
         "eslint",
@@ -16,6 +17,10 @@
         "config",
         "tsconfig"
     ],
+    "typeCoverage": {
+        "atLeast": 100,
+        "detail": true
+    },
     "exports": {
         ".": {
             "import": "./dist/index.js",
@@ -26,6 +31,9 @@
     },
     "author": "Emingy",
     "license": "ISC",
+    "devDependencies": {
+        "type-coverage": "2.29.7"
+    },
     "peerDependencies": {
         "@eslint/js": "9.39.1",
         "@typescript-eslint/parser": "8.46.3",
