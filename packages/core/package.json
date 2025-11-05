@@ -28,7 +28,11 @@
         "classnames": "2.5.1"
     },
     "devDependencies": {
-        "@emingy/configs": "workspace:^"
+        "@emingy/configs": "workspace:^",
+        "@rslib/core": "0.17.0",
+        "dpdm": "3.14.0",
+        "@rsbuild/plugin-react": "1.4.1",
+        "@rsbuild/plugin-sass": "1.4.0"
     },
     "peerDependencies": {
         "react": "19.2.0",
