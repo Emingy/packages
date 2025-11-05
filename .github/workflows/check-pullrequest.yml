@@ -41,3 +41,20 @@ jobs:
 
             - name: Check style lint
               run: pnpm lint:scss
+
+    build:
+        name: 🏗️ Build
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+              with:
+                  fetch-depth: 0
+            - name: Prepare
+              uses: ./.github/actions/prepare-project/
+
+            - name: Check storybook build
+              run: pnpm build:storybook
+
+            - name: Check packages build
+              run: pnpm -r --if-present build
