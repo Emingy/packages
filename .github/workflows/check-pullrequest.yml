@@ -38,3 +38,6 @@ jobs:
 
             - name: Check format
               run: pnpm format
+
+            - name: Check style lint
+              run: pnpm lint:scss
