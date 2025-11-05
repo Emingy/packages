@@ -45,6 +45,9 @@ jobs:
             - name: Check deadcode
               run: pnpm knip
 
+            - name: Ts coverage
+              run: pnpm coverage:ts
+
     build:
         name: 🏗️ Build
         runs-on: ubuntu-latest
