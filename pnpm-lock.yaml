@@ -147,13 +147,6 @@ importers:
       typescript-eslint:
         specifier: 8.46.3
         version: 8.46.3(eslint@9.37.0(jiti@2.6.1))(typescript@5.9.3)
-    devDependencies:
-      '@rslib/core':
-        specifier: 0.17.0
-        version: 0.17.0(typescript@5.9.3)
-      dpdm:
-        specifier: 3.14.0
-        version: 3.14.0
 
   packages/core:
     dependencies:
@@ -170,6 +163,18 @@ importers:
       '@emingy/configs':
         specifier: workspace:^
         version: link:../configs
+      '@rsbuild/plugin-react':
+        specifier: 1.4.1
+        version: 1.4.1(@rsbuild/core@1.6.1)
+      '@rsbuild/plugin-sass':
+        specifier: 1.4.0
+        version: 1.4.0(@rsbuild/core@1.6.1)
+      '@rslib/core':
+        specifier: 0.17.0
+        version: 0.17.0(typescript@5.9.3)
+      dpdm:
+        specifier: 3.14.0
+        version: 3.14.0
 
 packages:
 

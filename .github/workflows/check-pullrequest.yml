@@ -42,6 +42,9 @@ jobs:
             - name: Check style lint
               run: pnpm lint:scss
 
+            - name: Check deadcode
+              run: pnpm knip
+
     build:
         name: 🏗️ Build
         runs-on: ubuntu-latest
