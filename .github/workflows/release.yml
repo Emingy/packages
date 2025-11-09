@@ -41,6 +41,8 @@ jobs:
   release:
     name: 🚀 Release
     runs-on: ubuntu-latest
+    if: success()
+    needs: [tests, checks]
     permissions:
       contents: write # to be able to publish a GitHub release
       issues: write # to be able to comment on released issues
@@ -69,7 +71,7 @@ jobs:
 
   deploy-storybook:
     name: 🚀 Deploy Storybook to GitHub Pages
-    if: success() && github.event_name == 'push' && github.ref == 'refs/heads/master'
+    if: success()
     needs: [tests, checks]
     runs-on: ubuntu-latest
     environment:
