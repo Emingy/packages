@@ -21,7 +21,7 @@ jobs:
         uses: ./.github/actions/prepare-project/
 
       - name: Testing
-        run: ./.github/actions/unit-tests/
+        uses: ./.github/actions/unit-tests/
 
   checks:
     name: 🔍 Static Analysis & Code Quality
@@ -48,6 +48,9 @@ jobs:
       issues: write # to be able to comment on released issues
       pull-requests: write # to be able to comment on released pull requests
       id-token: write # to enable use of OIDC for trusted publishing and npm provenance
+    concurrency:
+      group: release
+      cancel-in-progress: false
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
