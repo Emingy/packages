@@ -1,0 +1,7 @@
+name: "Unit Testing"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Run tests
+      run: pnpm test

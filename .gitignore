@@ -2,8 +2,5 @@
 node_modules
 debug-storybook.log
 storybook-static
-dist
-
-**/node_modules
-**/dist
+lib
 coverage

@@ -4,5 +4,6 @@ obj
 *.*
 !*.css
 !*.scss
-dist
+lib
+coverage
 storybook-static

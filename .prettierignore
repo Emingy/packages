@@ -1,6 +1,6 @@
 node_modules
 .husky
 plop-templates
-*.mdx
-dist
+lib
+coverage
 storybook-static

@@ -1,0 +1,22 @@
+name: "Checks"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Check circular dependency
+      run: pnpm check-circular-dependency
+
+    - name: Check linting
+      run: pnpm lint
+
+    - name: Check linting scss
+      run: pnpm lint:scss
+
+    - name: Check format
+      run: pnpm format
+
+    - name: Knip
+      run: pnpm knip
+
+    - name: Ts coverage
+      run: pnpm coverage:ts

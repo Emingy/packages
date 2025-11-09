@@ -1,7 +1,7 @@
 import type { StorybookConfig } from 'storybook-react-rsbuild';
 
 const config: StorybookConfig = {
-    stories: ['../packages/**/*.mdx', '../packages/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
+    stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
     addons: ['@storybook/addon-docs', 'storybook-addon-rslib'],
     framework: {
         name: 'storybook-react-rsbuild',
@@ -13,7 +13,7 @@ const config: StorybookConfig = {
     },
     staticDirs: [
         {
-            from: '../public',
+            from: '../assets',
             to: '/static',
         },
     ],

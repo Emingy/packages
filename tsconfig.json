@@ -1,13 +1,15 @@
 {
     "extends": "@emingy/configs/tsconfig",
     "compilerOptions": {
-        "module": "ESNext",
-        "moduleResolution": "bundler",
-        "baseUrl": "./",
         "paths": {
-            "@storybook-components/*": ["storybook/components/*"],
-            "@storybook-utils/*": ["storybook/utils/*"]
-        }
+            "@emingy/core/*": ["src/*"],
+            "@storybook-components/*": [".storybook/components/*"],
+            "@storybook-utils/*": [".storybook/utils/*"]
+        },
+        "baseUrl": "./",
+        "rootDir": "./src",
+        "noEmit": true
     },
-    "include": ["packages"]
+    "include": ["src/**/*"],
+    "exclude": ["lib", "node_modules", ".storybook", "src/styles", "**/__tests__"]
 }

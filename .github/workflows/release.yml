@@ -1,0 +1,103 @@
+name: Release
+on:
+  push:
+    branches:
+      - master
+
+permissions:
+  contents: read # for checkout
+
+jobs:
+  tests:
+    name: 🧪 Testing (Unit)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Prepare
+        uses: ./.github/actions/prepare-project/
+
+      - name: Testing
+        run: ./.github/actions/unit-tests/
+
+  checks:
+    name: 🔍 Static Analysis & Code Quality
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Prepare
+        uses: ./.github/actions/prepare-project/
+
+      - name: Checks
+        uses: ./.github/actions/checks/
+
+  release:
+    name: 🚀 Release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # to be able to publish a GitHub release
+      issues: write # to be able to comment on released issues
+      pull-requests: write # to be able to comment on released pull requests
+      id-token: write # to enable use of OIDC for trusted publishing and npm provenance
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Prepare
+        uses: ./.github/actions/prepare-project/
+
+      - name: Build
+        run: pnpm run build
+
+      - name: Update npm
+        run: npm install -g npm@latest
+
+      - name: Run Semantic Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npx semantic-release
+
+  deploy-storybook:
+    name: 🚀 Deploy Storybook to GitHub Pages
+    if: success() && github.event_name == 'push' && github.ref == 'refs/heads/master'
+    needs: [tests, checks]
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    concurrency:
+      group: deploy-storybook
+      cancel-in-progress: false
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Prepare
+        uses: ./.github/actions/prepare-project/
+
+      - name: Build Storybook
+        run: PUBLIC_PATH='/packages' pnpm build:storybook
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: "./storybook-static"
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

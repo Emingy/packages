@@ -1,66 +1,50 @@
 name: CI Checks
 
 on:
-    pull_request:
-        branches: [master]
+  pull_request:
+    branches: [master]
 
 jobs:
-    tests:
-        name: 🧪 Testing
-        runs-on: ubuntu-latest
-        steps:
-            - name: Checkout code
-              uses: actions/checkout@v4
-              with:
-                  fetch-depth: 0
-            - name: Prepare
-              uses: ./.github/actions/prepare-project/
+  tests:
+    name: 🧪 Testing (Unit)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-            - name: Run tests
-              run: pnpm test
+      - name: Prepare
+        uses: ./.github/actions/prepare-project/
 
-    checks:
-        name: 🔍 Static Analysis & Code Quality
-        runs-on: ubuntu-latest
-        steps:
-            - name: Checkout code
-              uses: actions/checkout@v4
-              with:
-                  fetch-depth: 0
-            - name: Prepare
-              uses: ./.github/actions/prepare-project/
+      - name: Testing
+        run: ./.github/actions/unit-tests/
 
-            - name: Check circular dependency
-              run: pnpm check-circular-dependency
+  checks:
+    name: 🔍 Static Analysis & Code Quality
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-            - name: Check linting
-              run: pnpm lint
+      - name: Prepare
+        uses: ./.github/actions/prepare-project/
 
-            - name: Check format
-              run: pnpm format
+      - name: Checks
+        uses: ./.github/actions/checks/
 
-            - name: Check style lint
-              run: pnpm lint:scss
+  build:
+    name: 🏗️ Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Prepare
+        uses: ./.github/actions/prepare-project/
 
-            - name: Check deadcode
-              run: pnpm knip
-
-            - name: Ts coverage
-              run: pnpm coverage:ts
-
-    build:
-        name: 🏗️ Build
-        runs-on: ubuntu-latest
-        steps:
-            - name: Checkout code
-              uses: actions/checkout@v4
-              with:
-                  fetch-depth: 0
-            - name: Prepare
-              uses: ./.github/actions/prepare-project/
-
-            - name: Check storybook build
-              run: pnpm build:storybook
-
-            - name: Check packages build
-              run: pnpm -r --if-present build
+      - name: Check packages build
+        run: pnpm build

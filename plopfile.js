@@ -12,9 +12,9 @@ module.exports = function (plop) {
         actions: [
             {
                 type: 'addMany',
-                base: 'plop-templates/UIComponent',
-                destination: 'packages/core/src/ui/{{pascalCase name}}',
-                templateFiles: 'plop-templates/UIComponent/**/*.hbs',
+                base: '.plop-templates/UIComponent',
+                destination: 'src/ui/{{pascalCase name}}',
+                templateFiles: '.plop-templates/UIComponent/**/*.hbs',
             },
         ],
     });
@@ -32,9 +32,9 @@ module.exports = function (plop) {
         actions: [
             {
                 type: 'addMany',
-                base: 'plop-templates/styles/Variable',
-                destination: 'packages/core/src/styles/variables/{{camelCase name}}',
-                templateFiles: 'plop-templates/styles/Variable/**/*.hbs',
+                base: '.plop-templates/styles/Variable',
+                destination: 'src/styles/variables/{{camelCase name}}',
+                templateFiles: '.plop-templates/styles/Variable/**/*.hbs',
             },
         ],
     });
@@ -52,9 +52,9 @@ module.exports = function (plop) {
         actions: [
             {
                 type: 'addMany',
-                base: 'plop-templates/styles/Mixin',
-                destination: 'packages/core/src/styles/mixins/{{camelCase name}}',
-                templateFiles: 'plop-templates/styles/Mixin/**/*.hbs',
+                base: '.plop-templates/styles/Mixin',
+                destination: 'src/styles/mixins/{{camelCase name}}',
+                templateFiles: '.plop-templates/styles/Mixin/**/*.hbs',
             },
         ],
     });
@@ -72,9 +72,9 @@ module.exports = function (plop) {
         actions: [
             {
                 type: 'addMany',
-                base: 'plop-templates/hook',
-                destination: 'packages/core/src/hooks/{{camelCase name}}',
-                templateFiles: 'plop-templates/hook/**/*.hbs',
+                base: '.plop-templates/hook',
+                destination: 'src/hooks/{{camelCase name}}',
+                templateFiles: '.plop-templates/hook/**/*.hbs',
             },
         ],
     });

@@ -1,3 +1,3 @@
-import { BaseStylelintConfig } from '@emingy/configs';
+import { BaseStylelintConfig } from "@emingy/configs";
 
 export default BaseStylelintConfig;

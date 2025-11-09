@@ -2,27 +2,67 @@ import { pluginReact } from '@rsbuild/plugin-react';
 import { pluginSass } from '@rsbuild/plugin-sass';
 import { defineConfig } from '@rslib/core';
 
+const isLibBuild = process.env.TYPE === 'lib';
+
 export default defineConfig({
     lib: [
         {
             bundle: false,
-            dts: true,
+            dts: isLibBuild,
             format: 'esm',
         },
     ],
     source: {
         entry: {
-            index: ['./packages/**', '!**/dist', '!**/node_modules'],
+            index: isLibBuild
+                ? [
+                      './src/**',
+                      '!src/storybook/**/*',
+                      '!src/**/*.{stories,spec}.*',
+                      '!src/**/*.{mdx,snap}',
+                      '!src/**/story',
+                      '!src/styles/**',
+                  ]
+                : ['./src/**', '!**/dist', '!**/node_modules'],
         },
     },
     output: {
         target: 'web',
+        cleanDistPath: true,
+        distPath: isLibBuild ? './lib' : './dist',
+        copy: isLibBuild
+            ? {
+                  patterns: [
+                      {
+                          from: './src/styles',
+                          to: './styles',
+                          globOptions: {
+                              dot: false,
+                              ignore: ['**/story/**/*', '**/*.mdx', '**/*.stories.*'],
+                          },
+                      },
+                  ],
+              }
+            : undefined,
     },
     plugins: [pluginReact(), pluginSass()],
     resolve: {
         alias: {
-            '@storybook-components': './storybook/components/*',
-            '@storybook-utils': './storybook/utils/*',
+            '@emingy/core': './src/*',
+            '@storybook-components': './src/storybook/components/*',
+            '@storybook-utils': './src/storybook/utils/*',
         },
     },
+
+    tools: isLibBuild
+        ? {
+              rspack: (config, { mergeConfig }) => {
+                  return mergeConfig(config, {
+                      output: {
+                          chunkFilename: '[name].[ext]',
+                      },
+                  });
+              },
+          }
+        : {},
 });

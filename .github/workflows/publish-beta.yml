@@ -1,73 +1,46 @@
 name: Manual Beta Publish
 
 on:
-    workflow_dispatch:
-        inputs:
-            package_name:
-                description: 'Name of the package to publish (e.g., @scope/button). Leave empty to publish ALL packages.'
-                required: false
-                default: '@emingy/configs'
-                type: choice
-                options:
-                    - '@emingy/configs'
-                    - '@emingy/core'
+  workflow_dispatch:
+
 permissions:
-    contents: write
-    packages: write
-    id-token: write
+  contents: read # for checkout
 
 jobs:
-    tests:
-        name: 🧪 Testing
-        runs-on: ubuntu-latest
-        steps:
-            - name: Checkout code
-              uses: actions/checkout@v4
-              with:
-                  fetch-depth: 0
-            - name: Prepare
-              uses: ./.github/actions/prepare-project/
+  release:
+    name: 🧪 Publish Beta
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # to be able to publish a GitHub release
+      issues: write # to be able to comment on released issues
+      pull-requests: write # to be able to comment on released pull requests
+      id-token: write # to enable use of OIDC for trusted publishing and npm provenance
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-            - name: Run tests
-              run: pnpm test
+      - name: Prepare
+        uses: ./.github/actions/prepare-project/
 
-    publish-beta:
-        name: 🧪 Publish Beta to npm ${{ github.event.inputs.package_name }}
-        runs-on: ubuntu-latest
+      - name: Build
+        run: pnpm run build
 
-        if: github.ref_name != 'master'
+      - name: "Get Previous tag"
+        id: previoustag
+        uses: "WyriHaximus/github-action-get-previous-tag@v1"
+        with:
+          fallback: 1.0.0
 
-        steps:
-            - name: Checkout code
-              uses: actions/checkout@v4
-              with:
-                  fetch-depth: 0
-            - name: Prepare
-              uses: ./.github/actions/prepare-project/
+      # Version: X.Y.Z-beta.<run_id>.N (example: 1.0.0-beta.123456789.0)
+      - name: Bump to beta version
+        run: |
+          CURRENT_VERSION=$(echo "${{ steps.previoustag.outputs.tag }}" | sed 's/^v//')
 
-            - name: Determine Package Filter Argument
-              id: filter_arg
-              run: |
-                  FILTER=""
-                  PACKAGE_NAME="${{ github.event.inputs.package_name }}"
+          pnpm exec -- npm version "${CURRENT_VERSION}-beta-${{ github.run_id }}" --no-git-tag-version
 
-                  if [ -n "$PACKAGE_NAME" ]; then
-                      FILTER="--filter $PACKAGE_NAME"
-                  fi
-
-                  echo "filter_arg=$FILTER" >> $GITHUB_OUTPUT
-
-            - name: Build packages
-              run: pnpm ${{ steps.filter_arg.outputs.filter_arg }} run build
-
-            # Version: X.Y.Z-beta.<run_id>.N (example: 1.0.0-beta.123456789.0)
-            - name: Bump to beta version
-              run: |
-                  CURRENT_VERSION=$(pnpm --filter @emingy/configs exec -- node -p "require('./package.json').version")
-
-                  pnpm ${{ steps.filter_arg.outputs.filter_arg }} exec -- npm version "${CURRENT_VERSION}-beta-${{ github.run_id }}" --no-git-tag-version
-
-            - name: Publish Beta to npm
-              run: pnpm ${{ steps.filter_arg.outputs.filter_arg }} publish --tag beta --access public --no-git-checks
-              env:
-                  NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Publish Beta to npm
+        run: pnpm publish --tag beta --access public --no-git-checks
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

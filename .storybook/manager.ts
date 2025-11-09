@@ -5,7 +5,7 @@ const myTheme = create({
     base: 'dark',
 
     brandTitle:
-        '<div style="display: flex; gap: 8px; align-items: center;"><img src="./static/logo.svg" width="60px" height="60px" /><span style="font-size: 32px; line-height: 38px;">Packages</span></div>',
+        '<div style="display: flex; gap: 8px; align-items: center;"><img src="./static/logo.svg" width="60px" height="60px" /><span style="font-size: 32px; line-height: 38px;">UI lib</span></div>',
     brandUrl: 'https://github.com/Emingy/packages',
     // brandImage: '/logo.svg',
 
